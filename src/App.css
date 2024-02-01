@@ -61,11 +61,14 @@ button.current-location-button:hover {
   font-size: 0.95em;
   font-weight: 500;
 }
+
 h2.degree {
+  text-align: start;
   font-size: 5em;
   padding: 0 10%;
 }
 p.highest-lowest-temp {
+  text-align: start;
   font-size: 1em;
   padding: 0 10%;
 }

@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Aside.css";
 import "./App.css";
 import axios from "axios";
 
 export default function MainAside() {
-/*  let [hour, setHour] = useState("");
+  /*  let [hour, setHour] = useState("");
   let [time, setTime] = useState("");
   let [minute, setMinute] = useState("");
   let [month, setMonth] = useState("");
@@ -42,7 +42,7 @@ export default function MainAside() {
   setYears(`${year}`);
   setFullDate(`${month} ${dates}, ${years}`);*/
 
-  let apiKey = "05fo015e85414d77adb5a43ddt2314b8";
+  let apiKey = "1615adaa703ba9f96a337d48232ad32d";
   let [location, setLocation] = useState("");
   let [city, setCity] = useState("");
   let [temp, setTemp] = useState("");
@@ -54,29 +54,37 @@ export default function MainAside() {
   let [pressure, setPressure] = useState("");
   //current weather
   function showTemperature(response) {
-    setLocation(`${response.data.city}`);
-    setTemp(Math.round(response.data.temperature.current));
-    setIconUrl(`${response.data.condition.icon_url}`);
-    setCity(`${response.data.city}, ${response.data.country}`);
+    console.log(response);
+    setLocation(`${response.data.name}`);
+    setTemp(Math.round(response.data.main.temp));
+    setIconUrl(
+      `http://openweathermap.org/img/w/${response.data.weather[0].icon}.png`
+    );
+    setCity(`${response.data.name}, ${response.data.sys.country}`);
     setCurrentTemperature(`${temp}°`);
-    setWeatherDescription(response.data.condition.description);
-    setHumidity(`${response.data.temperature.humidity}%`);
+    setWeatherDescription(response.data.weather[0].description);
+    setHumidity(`${response.data.main.humidity}%`);
     setWindSpeed(`${response.data.wind.speed} m/s`);
-    setPressure(`${response.data.temperature.pressure} hPa`);
+    setPressure(`${response.data.main.pressure} hPa`);
   }
-
+  function searchCity(city) {
+    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+    axios.get(apiUrl).then(showTemperature);
+  }
   function search(event) {
     event.preventDefault();
     let searchInput = document.querySelector("#search-input-text");
-    let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${searchInput.value}&key=${apiKey}&units=metric`;
-    axios.get(apiUrl).then(showTemperature);
+    searchCity(searchInput.value);
   }
-
+    //searchCity("Kisumu");
+  
+  
   //getting weather for current location
   function showPosition(position) {
+    console.log(position);
     let lat = position.coords.latitude;
     let lon = position.coords.longitude;
-    let url = `https://api.shecodes.io/weather/v1/current?lat=${lat}&lon=${lon}&units=metric&key=${apiKey}`;
+    let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`;
     axios.get(url).then(showTemperature);
   }
   function navigate() {
@@ -84,6 +92,7 @@ export default function MainAside() {
   }
   //show weather for current location when page reloads
   navigate();
+  
 
   return (
     <div className="main-aside">
@@ -94,12 +103,8 @@ export default function MainAside() {
               {location}
             </h1>
           </div>
-          <div className="col-2 time" id="time">
-          
-          </div>
-          <div className="col-4 text-end m-auto" id="date">
-            
-          </div>
+          <div className="col-2 time" id="time"></div>
+          <div className="col-4 text-end m-auto" id="date"></div>
         </div>
       </header>
       <aside>
@@ -167,12 +172,15 @@ export default function MainAside() {
       <main>
         <div>
           <div className="icon-city d-flex">
-            {iconUrl && <img src={iconUrl} alt="Weather Icon" />}
+            <div id="weather-icon">
+              {" "}
+              {iconUrl && <img src={iconUrl} alt="Weather Icon" />}
+            </div>
             <div className="city-country m-auto d-none d-md-flex" id="city">
               {city}
             </div>
           </div>
-          <div>
+          <div className="current-temp">
             <h2 className="degree" id="current-temperature">
               {currentTemperature}
             </h2>

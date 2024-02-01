@@ -6,7 +6,7 @@ export default function Github() {
     <div className="Github">
       <p id="github-link">
         <a
-          href="https://github.com/mulurebrenda/vanilla-weather-app"
+          href="https://github.com/mulurebrenda/react-weather-app"
           target="_blank"
           rel="noreferrer"
         >
@@ -14,7 +14,7 @@ export default function Github() {
         </a>
         &nbsp;by Brenda Mulure&nbsp;
         <a
-          href="https://vanilla-weather-app-bm.netlify.app"
+          href="https://app.netlify.com/sites/react-weather-app-bm/configuration/general"
           target="_blank"
           rel="noreferrer"
         >
