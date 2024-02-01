@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./Aside.css";
 import "./App.css";
 import axios from "axios";
@@ -76,9 +76,8 @@ export default function MainAside() {
     let searchInput = document.querySelector("#search-input-text");
     searchCity(searchInput.value);
   }
-    //searchCity("Kisumu");
-  
-  
+  //searchCity("Kisumu");
+
   //getting weather for current location
   function showPosition(position) {
     console.log(position);
@@ -92,7 +91,6 @@ export default function MainAside() {
   }
   //show weather for current location when page reloads
   navigate();
-  
 
   return (
     <div className="main-aside">
