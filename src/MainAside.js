@@ -76,7 +76,7 @@ export default function MainAside() {
     let searchInput = document.querySelector("#search-input-text");
     searchCity(searchInput.value);
   }
-  //searchCity("Kisumu");
+  searchCity("Kisumu");
 
   //getting weather for current location
   function showPosition(position) {
@@ -90,7 +90,7 @@ export default function MainAside() {
     navigator.geolocation.getCurrentPosition(showPosition);
   }
   //show weather for current location when page reloads
-  navigate();
+  //navigate();
 
   return (
     <div className="main-aside">
