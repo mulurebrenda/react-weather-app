@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Forecast() {
+export default function Forecast(props) {
   return (
     <div className="upcoming-weather" id="forecast">
       <div className="day-1">

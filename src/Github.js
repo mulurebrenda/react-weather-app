@@ -5,20 +5,21 @@ export default function Github() {
   return (
     <div className="Github">
       <p id="github-link">
+        This project was coded by&nbsp;
+        <a
+          href="https://frontend-developer-portfolio-mulure.netlify.app"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Brenda Mulure
+        </a>
+        &nbsp;and is&nbsp;
         <a
           href="https://github.com/mulurebrenda/react-weather-app"
           target="_blank"
           rel="noreferrer"
         >
-          Open-source code
-        </a>
-        &nbsp;by Brenda Mulure&nbsp;
-        <a
-          href="https://app.netlify.com/sites/react-weather-app-bm/configuration/general"
-          target="_blank"
-          rel="noreferrer"
-        >
-          hosted on Netlify
+          open-sourced on GitHub
         </a>
       </p>
     </div>

@@ -1,6 +1,6 @@
 import MainAside from "./MainAside";
-import Forecast from "./Forecast";
 import Github from "./Github";
+import 'bootstrap/dist/css/bootstrap.css';
 import "./App.css";
 
 function App() {
@@ -9,7 +9,6 @@ function App() {
       <div className="container">
         <div className="weather-app">
           <MainAside />
-          <Forecast />
         </div>
       </div>
       <Github />
