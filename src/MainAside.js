@@ -135,7 +135,7 @@ export default function MainAside() {
     navigator.geolocation.getCurrentPosition(showPosition);
   }
   window.onload = function setSearchCity() {
-    navigate();
+    searchCity("Kisumu");
   };
   if (weatherData.ready) {
     return (
