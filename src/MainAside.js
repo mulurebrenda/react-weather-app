@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 //import Forecast from "./Forecast";
+import icon from "./rain-night.png";
 import "./Aside.css";
 import "./App.css";
 import axios from "axios";
@@ -256,7 +257,7 @@ export default function MainAside() {
            <div className="row">
              <div className="col-5 location">
                <h1 className="text-start ps-4" id="location">
-                 {weatherData.location}
+                 Kisumu
                </h1>
              </div>
              <div className="col-2 time" id="time">
@@ -313,21 +314,21 @@ export default function MainAside() {
              <div className="humidity">
                💧
                <br />
-               <span id="humidity">{weatherData.humidity}</span>
+               <span id="humidity">37%</span>
                <br />
                <strong> Humidity </strong>
              </div>
              <div className="wind-speed">
                💨
                <br />
-               <span id="wind-speed">{weatherData.windSpeed}</span>
+               <span id="wind-speed">5 m/s</span>
                <br />
                <strong> Wind speed </strong>
              </div>
              <div className="pressure">
                🌀
                <br />
-               <span id="pressure">{weatherData.pressure}</span>
+               <span id="pressure">1000hPa</span>
                <br />
                <strong> Pressure </strong>
              </div>
@@ -338,25 +339,24 @@ export default function MainAside() {
              <div className="icon-city d-flex">
                <div id="weather-icon">
                  {" "}
-                 {weatherData.iconUrl && (
-                   <img src={weatherData.iconUrl} alt="Weather Icon" />
-                 )}
+                   <img src={icon} alt="Weather Icon" />
+                 
                </div>
                <div className="city-country m-auto d-none d-md-flex" id="city">
-                 {weatherData.cityCountry}
+                 Kisumu, Kenya
                </div>
              </div>
              <div className="current-temp">
                <h2 className="degree" id="current-temperature">
-                 {unit.currentTemp}
+                 28°
                </h2>
                <p className="highest-lowest-temp">
-                 <span id="highest-temp">{temp.highestTemp}</span> |&nbsp;
-                 <span id="lowest-temp">{temp.lowestTemp}</span>
+                 <span id="highest-temp">25°</span> |&nbsp;
+                 <span id="lowest-temp">18°</span>
                  <br />
                  <span id="weather-description">
                    {" "}
-                   {weatherData.weatherDescription}{" "}
+                   Partly Cloudy{" "}
                  </span>
                </p>
              </div>
