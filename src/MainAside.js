@@ -9,17 +9,19 @@ export default function MainAside() {
   const [weatherData, setWeatherData] = useState({ ready: false });
   const [unit, setUnit] = useState("");
   const [temp, setTemp] = useState("");
-  //current weather
-  function showTemperature(response) {
-    console.log(response);
-    let hours = new Date(response.data.time * 1000).getHours();
+  let now = new Date();
+    let hours = now.getHours();
     if (hours < 10) {
       hours = `0${hours}`;
     }
-    let minutes = new Date(response.data.time * 1000).getMinutes();
+    let minutes = now.getMinutes();
     if (minutes < 10) {
       minutes = `0${minutes}`;
     }
+  //current weather
+  function showTemperature(response) {
+    console.log(response);
+   
     let months = [
       "January",
       "February",
@@ -133,7 +135,7 @@ export default function MainAside() {
     navigator.geolocation.getCurrentPosition(showPosition);
   }
   window.onload = function setSearchCity() {
-    searchCity("Kisumu");
+    navigate();
   };
   if (weatherData.ready) {
     return (
@@ -261,10 +263,10 @@ export default function MainAside() {
                </h1>
              </div>
              <div className="col-2 time" id="time">
-               {weatherData.time}
+               20:53
              </div>
              <div className="col-4 text-end m-auto" id="date">
-               {weatherData.fullDate}
+               February 9, 2024
              </div>
            </div>
          </header>
@@ -339,8 +341,7 @@ export default function MainAside() {
              <div className="icon-city d-flex">
                <div id="weather-icon">
                  {" "}
-                   <img src={icon} alt="Weather Icon" />
-                 
+                 <img src={icon} alt="Weather Icon" />
                </div>
                <div className="city-country m-auto d-none d-md-flex" id="city">
                  Kisumu, Kenya
@@ -354,10 +355,7 @@ export default function MainAside() {
                  <span id="highest-temp">25°</span> |&nbsp;
                  <span id="lowest-temp">18°</span>
                  <br />
-                 <span id="weather-description">
-                   {" "}
-                   Partly Cloudy{" "}
-                 </span>
+                 <span id="weather-description"> Partly Cloudy </span>
                </p>
              </div>
            </div>
