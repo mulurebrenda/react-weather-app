@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-//import Forecast from "./Forecast";
+import Forecast from "./Forecast";
 import icon from "./rain-night.png";
 import "./Aside.css";
 import "./App.css";
@@ -10,18 +10,17 @@ export default function MainAside() {
   const [unit, setUnit] = useState("");
   const [temp, setTemp] = useState("");
   let now = new Date();
-    let hours = now.getHours();
-    if (hours < 10) {
-      hours = `0${hours}`;
-    }
-    let minutes = now.getMinutes();
-    if (minutes < 10) {
-      minutes = `0${minutes}`;
-    }
+  let hours = now.getHours();
+  if (hours < 10) {
+    hours = `0${hours}`;
+  }
+  let minutes = now.getMinutes();
+  if (minutes < 10) {
+    minutes = `0${minutes}`;
+  }
   //current weather
   function showTemperature(response) {
     console.log(response);
-   
     let months = [
       "January",
       "February",
@@ -67,10 +66,9 @@ export default function MainAside() {
       currentTemp: `${weatherData.convertedTemp}`,
     });
     setTemp({
-      highestTemp: `${forecastData.convertedHighestTemp}`,
-      lowestTemp: `${forecastData.convertedLowestTemp}`
-    })
-      
+      highestTemp: `${forecastDataTemp.convertedHighestTemp}`,
+      lowestTemp: `${forecastDataTemp.convertedLowestTemp}`,
+    });
   }
 
   function showCelcius(event) {
@@ -79,15 +77,19 @@ export default function MainAside() {
       currentTemp: `${weatherData.currentTemp}`,
     });
     setTemp({
-      highestTemp: `${forecastData.highestTemp}`,
-      lowestTemp: `${forecastData.lowestTemp}` 
-    })
+      highestTemp: `${forecastDataTemp.highestTemp}`,
+      lowestTemp: `${forecastDataTemp.lowestTemp}`,
+    });
   }
 
   //forecast
   const [forecastData, setForecastData] = useState();
+  const [forecastDataTemp, setForecastDataTemp] = useState();
   function showForecast(response) {
     console.log(response);
+    
+
+    //let day = days[new Date(response.data.daily[0].time * 1000).getDay()];
     let highestTemperature = Math.round(
       response.data.daily[0].temperature.maximum
     );
@@ -96,7 +98,7 @@ export default function MainAside() {
       response.data.daily[0].temperature.minimum
     );
     let convertedLowestTemperature = Math.round(lowestTemperature * 1.8 + 32);
-    setForecastData({
+    setForecastDataTemp({
       highestTemp: `${highestTemperature}°`,
       lowestTemp: `${lowestTemperature}°`,
       convertedHighestTemp: `${convertedHighestTemperature}°`,
@@ -104,8 +106,16 @@ export default function MainAside() {
     });
     setTemp({
       highestTemp: `${highestTemperature}°`,
-      lowestTemp: `${lowestTemperature}°`
-
+      lowestTemp: `${lowestTemperature}°`,
+    });
+    setForecastData({
+      /*day: `${formatDay(response.data.daily[1].time)}`,
+      highestTemp: `${highestTemperature}°`,
+      lowestTemp: `${lowestTemperature}°`,
+      convertedHighestTemp: `${convertedHighestTemperature}°`,
+      convertedLowestTemp: `${convertedLowestTemperature}°`,
+      maxTemp: `${maxTemperature}°`,*/
+      forecastdata: response.data.daily,
     });
   }
   let apiKey = "05fo015e85414d77adb5a43ddt2314b8";
@@ -139,19 +149,136 @@ export default function MainAside() {
   };
   if (weatherData.ready) {
     return (
+      <div className="WeatherApp">
+        <div className="main-aside">
+          <header className="Header">
+            <div className="row">
+              <div className="col-5 location">
+                <h1 className="text-start ps-4" id="location">
+                  {weatherData.location}
+                </h1>
+              </div>
+              <div className="col-2 time" id="time">
+                {weatherData.time}
+              </div>
+              <div className="col-4 text-end m-auto" id="date">
+                {weatherData.fullDate}
+              </div>
+            </div>
+          </header>
+          <aside>
+            <div className="row">
+              <div className="col-9 searchform-current">
+                <div className="row">
+                  <div className="col-7 form">
+                    <form
+                      className="search-form"
+                      id="search-form"
+                      role="search"
+                      onSubmit={search}
+                    >
+                      <input
+                        className="form-control shadow-sm search-form-input"
+                        type="search"
+                        placeholder="Enter a city"
+                        autoFocus="on"
+                        autoComplete="off"
+                        id="search-input-text"
+                      />
+                    </form>
+                  </div>
+                  <div className="col-5">
+                    <button
+                      className="btn shadow-sm current-location-button text-white"
+                      onClick={navigate}
+                    >
+                      Current
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div className="col-3 units">
+                <button id="celsius" onClick={showCelcius}>
+                  °C
+                </button>
+                <span> | </span>
+                <button id="farenheit" onClick={showFarenheit}>
+                  °F
+                </button>
+              </div>
+            </div>
+            <hr />
+            <div className="conditions">
+              <div className="humidity">
+                💧
+                <br />
+                <span id="humidity">{weatherData.humidity}</span>
+                <br />
+                <strong> Humidity </strong>
+              </div>
+              <div className="wind-speed">
+                💨
+                <br />
+                <span id="wind-speed">{weatherData.windSpeed}</span>
+                <br />
+                <strong> Wind speed </strong>
+              </div>
+              <div className="pressure">
+                🌀
+                <br />
+                <span id="pressure">{weatherData.pressure}</span>
+                <br />
+                <strong> Pressure </strong>
+              </div>
+            </div>
+          </aside>
+          <main>
+            <div>
+              <div className="icon-city d-flex">
+                <div id="weather-icon">
+                    <img src={weatherData.iconUrl} alt="Weather Icon" width={110}/>
+                </div>
+                <div className="city-country m-auto d-none d-md-flex" id="city">
+                  {weatherData.cityCountry}
+                </div>
+              </div>
+              <div className="current-temp">
+                <h2 className="degree" id="current-temperature">
+                  {unit.currentTemp}
+                </h2>
+                <p className="highest-lowest-temp">
+                  <span id="highest-temp">{temp.highestTemp}</span> |&nbsp;
+                  <span id="lowest-temp">{temp.lowestTemp}</span>
+                  <br />
+                  <span id="weather-description">
+                    {" "}
+                    {weatherData.weatherDescription}{" "}
+                  </span>
+                </p>
+              </div>
+            </div>
+          </main>
+        </div>
+        <div className="Forecast">
+          <Forecast data={forecastData} />
+        </div>
+      </div>
+    );
+  } else {
+    return (
       <div className="main-aside">
         <header className="Header">
           <div className="row">
             <div className="col-5 location">
               <h1 className="text-start ps-4" id="location">
-                {weatherData.location}
+                Kisumu
               </h1>
             </div>
             <div className="col-2 time" id="time">
-              {weatherData.time}
+              20:53
             </div>
             <div className="col-4 text-end m-auto" id="date">
-              {weatherData.fullDate}
+              February 9, 2024
             </div>
           </div>
         </header>
@@ -201,21 +328,21 @@ export default function MainAside() {
             <div className="humidity">
               💧
               <br />
-              <span id="humidity">{weatherData.humidity}</span>
+              <span id="humidity">37%</span>
               <br />
               <strong> Humidity </strong>
             </div>
             <div className="wind-speed">
               💨
               <br />
-              <span id="wind-speed">{weatherData.windSpeed}</span>
+              <span id="wind-speed">5 m/s</span>
               <br />
               <strong> Wind speed </strong>
             </div>
             <div className="pressure">
               🌀
               <br />
-              <span id="pressure">{weatherData.pressure}</span>
+              <span id="pressure">1000hPa</span>
               <br />
               <strong> Pressure </strong>
             </div>
@@ -226,141 +353,26 @@ export default function MainAside() {
             <div className="icon-city d-flex">
               <div id="weather-icon">
                 {" "}
-                {weatherData.iconUrl && (
-                  <img src={weatherData.iconUrl} alt="Weather Icon" />
-                )}
+                <img src={icon} alt="Weather Icon" size={5} />
               </div>
               <div className="city-country m-auto d-none d-md-flex" id="city">
-                {weatherData.cityCountry}
+                Kisumu, Kenya
               </div>
             </div>
             <div className="current-temp">
               <h2 className="degree" id="current-temperature">
-                {unit.currentTemp}
+                28°
               </h2>
               <p className="highest-lowest-temp">
-                <span id="highest-temp">{temp.highestTemp}</span> |&nbsp;
-                <span id="lowest-temp">{temp.lowestTemp}</span>
+                <span id="highest-temp">25°</span> |&nbsp;
+                <span id="lowest-temp">18°</span>
                 <br />
-                <span id="weather-description">
-                  {" "}
-                  {weatherData.weatherDescription}{" "}
-                </span>
+                <span id="weather-description"> Partly Cloudy </span>
               </p>
             </div>
           </div>
         </main>
       </div>
     );
-  } else {
-     return (
-       <div className="main-aside">
-         <header className="Header">
-           <div className="row">
-             <div className="col-5 location">
-               <h1 className="text-start ps-4" id="location">
-                 Kisumu
-               </h1>
-             </div>
-             <div className="col-2 time" id="time">
-               20:53
-             </div>
-             <div className="col-4 text-end m-auto" id="date">
-               February 9, 2024
-             </div>
-           </div>
-         </header>
-         <aside>
-           <div className="row">
-             <div className="col-9 searchform-current">
-               <div className="row">
-                 <div className="col-7 form">
-                   <form
-                     className="search-form"
-                     id="search-form"
-                     role="search"
-                     onSubmit={search}
-                   >
-                     <input
-                       className="form-control shadow-sm search-form-input"
-                       type="search"
-                       placeholder="Enter a city"
-                       autoFocus="on"
-                       autoComplete="off"
-                       id="search-input-text"
-                     />
-                   </form>
-                 </div>
-                 <div className="col-5">
-                   <button
-                     className="btn shadow-sm current-location-button text-white"
-                     onClick={navigate}
-                   >
-                     Current
-                   </button>
-                 </div>
-               </div>
-             </div>
-             <div className="col-3 units">
-               <button id="celsius" onClick={showCelcius}>
-                 °C
-               </button>
-               <span> | </span>
-               <button id="farenheit" onClick={showFarenheit}>
-                 °F
-               </button>
-             </div>
-           </div>
-           <hr />
-           <div className="conditions">
-             <div className="humidity">
-               💧
-               <br />
-               <span id="humidity">37%</span>
-               <br />
-               <strong> Humidity </strong>
-             </div>
-             <div className="wind-speed">
-               💨
-               <br />
-               <span id="wind-speed">5 m/s</span>
-               <br />
-               <strong> Wind speed </strong>
-             </div>
-             <div className="pressure">
-               🌀
-               <br />
-               <span id="pressure">1000hPa</span>
-               <br />
-               <strong> Pressure </strong>
-             </div>
-           </div>
-         </aside>
-         <main>
-           <div>
-             <div className="icon-city d-flex">
-               <div id="weather-icon">
-                 {" "}
-                 <img src={icon} alt="Weather Icon" />
-               </div>
-               <div className="city-country m-auto d-none d-md-flex" id="city">
-                 Kisumu, Kenya
-               </div>
-             </div>
-             <div className="current-temp">
-               <h2 className="degree" id="current-temperature">
-                 28°
-               </h2>
-               <p className="highest-lowest-temp">
-                 <span id="highest-temp">25°</span> |&nbsp;
-                 <span id="lowest-temp">18°</span>
-                 <br />
-                 <span id="weather-description"> Partly Cloudy </span>
-               </p>
-             </div>
-           </div>
-         </main>
-       </div>
-     );
   }
 }

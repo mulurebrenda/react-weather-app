@@ -77,12 +77,6 @@ p.highest-lowest-temp {
   text-transform: capitalize;
 }
 .conditions,
-.day-1,
-.day-2,
-.day-3,
-.day-4,
-.day-5,
-.day-6,
 .forecast-day {
   border-radius: 4px;
   box-shadow: 0 0 5px rgba(128, 128, 128, 0.4);
@@ -114,12 +108,6 @@ p.highest-lowest-temp {
   line-height: 1.5em;
   text-align: center;
 }
-.day-1,
-.day-2,
-.day-3,
-.day-4,
-.day-5,
-.day-6,
 .forecast-day {
   background-color: rgba(196, 195, 195, 0.02);
   flex-grow: 1;
@@ -128,15 +116,6 @@ p.highest-lowest-temp {
   font-size: 1.02em;
   line-height: 2em;
   text-align: center;
-}
-#weather-icon-day1,
-#weather-icon-day2,
-#weather-icon-day3,
-#weather-icon-day4,
-#weather-icon-day5,
-#weather-icon-day6,
-.weather-forecast-icon {
-  width: 5em;
 }
 div.degrees {
   text-align: center;
