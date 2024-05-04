@@ -1,6 +1,7 @@
-import MainAside from "./MainAside";
+import React from "react";
+import Weather from "./Weather";
 import Github from "./Github";
-import 'bootstrap/dist/css/bootstrap.css';
+import "bootstrap/dist/css/bootstrap.css";
 import "./App.css";
 
 function App() {
@@ -8,7 +9,7 @@ function App() {
     <div className="App">
       <div className="container">
         <div className="weather-app">
-          <MainAside />
+          <Weather />
         </div>
       </div>
       <Github />

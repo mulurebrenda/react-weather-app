@@ -12,3 +12,8 @@ aside {
   margin: 1em;
   float: right;
 }
+div.main-aside-loading{
+  height: 30vh;
+  display: grid;
+  place-items: center;
+}

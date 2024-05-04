@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import Forecast from "./Forecast";
-import icon from "./rain-night.png";
 import "./Aside.css";
 import "./App.css";
 import axios from "axios";
+import Forecast from "./Forecast";
 
 export default function MainAside() {
   const [weatherData, setWeatherData] = useState({ ready: false });
@@ -87,9 +86,7 @@ export default function MainAside() {
   const [forecastDataTemp, setForecastDataTemp] = useState();
   function showForecast(response) {
     console.log(response);
-    
 
-    //let day = days[new Date(response.data.daily[0].time * 1000).getDay()];
     let highestTemperature = Math.round(
       response.data.daily[0].temperature.maximum
     );
@@ -236,7 +233,11 @@ export default function MainAside() {
             <div>
               <div className="icon-city d-flex">
                 <div id="weather-icon">
-                    <img src={weatherData.iconUrl} alt="Weather Icon" width={110}/>
+                  <img
+                    src={weatherData.iconUrl}
+                    alt="Weather Icon"
+                    width={110}
+                  />
                 </div>
                 <div className="city-country m-auto d-none d-md-flex" id="city">
                   {weatherData.cityCountry}
@@ -260,118 +261,15 @@ export default function MainAside() {
           </main>
         </div>
         <div className="Forecast">
-          <Forecast data={forecastData} />
-        </div>
+            <Forecast data={forecastData} />
+    </div>
       </div>
     );
   } else {
+    searchCity("Kisumu");
     return (
-      <div className="main-aside">
-        <header className="Header">
-          <div className="row">
-            <div className="col-5 location">
-              <h1 className="text-start ps-4" id="location">
-                Kisumu
-              </h1>
-            </div>
-            <div className="col-2 time" id="time">
-              20:53
-            </div>
-            <div className="col-4 text-end m-auto" id="date">
-              February 9, 2024
-            </div>
-          </div>
-        </header>
-        <aside>
-          <div className="row">
-            <div className="col-9 searchform-current">
-              <div className="row">
-                <div className="col-7 form">
-                  <form
-                    className="search-form"
-                    id="search-form"
-                    role="search"
-                    onSubmit={search}
-                  >
-                    <input
-                      className="form-control shadow-sm search-form-input"
-                      type="search"
-                      placeholder="Enter a city"
-                      autoFocus="on"
-                      autoComplete="off"
-                      id="search-input-text"
-                    />
-                  </form>
-                </div>
-                <div className="col-5">
-                  <button
-                    className="btn shadow-sm current-location-button text-white"
-                    onClick={navigate}
-                  >
-                    Current
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div className="col-3 units">
-              <button id="celsius" onClick={showCelcius}>
-                °C
-              </button>
-              <span> | </span>
-              <button id="farenheit" onClick={showFarenheit}>
-                °F
-              </button>
-            </div>
-          </div>
-          <hr />
-          <div className="conditions">
-            <div className="humidity">
-              💧
-              <br />
-              <span id="humidity">37%</span>
-              <br />
-              <strong> Humidity </strong>
-            </div>
-            <div className="wind-speed">
-              💨
-              <br />
-              <span id="wind-speed">5 m/s</span>
-              <br />
-              <strong> Wind speed </strong>
-            </div>
-            <div className="pressure">
-              🌀
-              <br />
-              <span id="pressure">1000hPa</span>
-              <br />
-              <strong> Pressure </strong>
-            </div>
-          </div>
-        </aside>
-        <main>
-          <div>
-            <div className="icon-city d-flex">
-              <div id="weather-icon">
-                {" "}
-                <img src={icon} alt="Weather Icon" size={5} />
-              </div>
-              <div className="city-country m-auto d-none d-md-flex" id="city">
-                Kisumu, Kenya
-              </div>
-            </div>
-            <div className="current-temp">
-              <h2 className="degree" id="current-temperature">
-                28°
-              </h2>
-              <p className="highest-lowest-temp">
-                <span id="highest-temp">25°</span> |&nbsp;
-                <span id="lowest-temp">18°</span>
-                <br />
-                <span id="weather-description"> Partly Cloudy </span>
-              </p>
-            </div>
-          </div>
-        </main>
+      <div className="WeatherApp">
+        <div className="main-aside-loading">Loading...</div>
       </div>
     );
   }
